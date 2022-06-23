@@ -9,5 +9,6 @@ const Box = styled.div`
 `;
 
 export const StatusBox = () => {
-  return <Box />;
+  const [boxColor, setBoxColor] = useState("255,0,0");
+  return <Box onClick={() => console.log("click")} />;
 };
