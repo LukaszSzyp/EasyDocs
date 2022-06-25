@@ -30,6 +30,7 @@ const TNullColorCell = styled.td`
   border-radius: 3px;
   cursor: pointer;
   position: relative;
+  background-color: rgb(${(props) => props.color});
 `;
 
 const Tcell = styled.td`
@@ -135,7 +136,10 @@ export const PopUpColorStatus = () => {
           </Trow>
         ))}
         <Trow>
-          <TNullColorCell onClick={openColorPickerPopupHandler}>
+          <TNullColorCell
+            onClick={openColorPickerPopupHandler}
+            color={`${color.r},${color.g},${color.b}`}
+          >
             <RgbColorPickerContainer isClosed={isColorPickerClosed}>
               <RgbColorPicker color={color} onChange={setColor} />
             </RgbColorPickerContainer>
