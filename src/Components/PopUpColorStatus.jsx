@@ -73,6 +73,7 @@ export const PopUpColorStatus = () => {
   ]);
 
   const [description, setDescription] = useState("");
+  const [newColor, setNewColor] = useState("");
 
   const DeleteColorStatusRowHandler = (id) => {
     const data = [...colorStatusData];
@@ -108,7 +109,7 @@ export const PopUpColorStatus = () => {
         <Trow>
           <TNullColorCell></TNullColorCell>
           <Tcell>
-            <Input />
+            <Input onChange={(e) => setDescription(e.target.value)} />
           </Tcell>
           <Tcell>
             <ButtonTable>Dodaj nowy</ButtonTable>
