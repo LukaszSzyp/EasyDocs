@@ -2,7 +2,7 @@ import { useState } from "react";
 import styled from "styled-components";
 
 const Container = styled.div`
-  width: 300px;
+  width: 400px;
   border-radius: 5px;
   display: flex;
   flex-direction: column;
@@ -17,30 +17,54 @@ const Thead = styled.tr`
   font-weight: bold;
 `;
 
+const Trow = styled.tr``;
+
+const TColorCell = styled.td`
+  background-color: #fff;
+  border-radius: 3px;
+`;
+
 const Tcell = styled.td`
   padding: 5px 10px;
-  text-align: center;
-  font-size: 1.1em;
 `;
 
 const ButtonContainer = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
+`;
+
+const ButtonTable = styled.button`
+  padding: 5px 10px;
+  margin-right: 10px;
 `;
 
 const Button = styled.button`
   width: 90px;
-  padding: 10px 15px;
-  margin: 10px 5px 5px 5px;
+  padding: 5px 10px;
+  margin: 10px 5px 5px 20px;
   background-color: #dee2e6;
   border-radius: 2px;
 `;
 
+const Input = styled.input`
+  height: 25px;
+`;
+
 export const PopUpColorStatus = () => {
-  const [colorStatus, setColorStatus] = useState({
-    color: "255,255,255",
-    meaning: "Nieprzypisany",
-  });
+  const [colorStatusData, setColorStatusData] = useState([
+    {
+      color: "255,255,255",
+      meaning: "Nieprzypisany",
+    },
+    {
+      color: "255,0,0",
+      meaning: "Niezapłacone",
+    },
+    {
+      color: "0,255,0",
+      meaning: "Opłacone",
+    },
+  ]);
 
   return (
     <Container>
@@ -48,16 +72,30 @@ export const PopUpColorStatus = () => {
         <Thead>
           <Tcell>Kolor</Tcell>
           <Tcell>Znaczenie</Tcell>
+          <Tcell></Tcell>
         </Thead>
-        <tr>
-          <td></td>
-          <Tcell>Nieprzypisany</Tcell>
-        </tr>
+        {colorStatusData.map((colorStatus) => (
+          <Trow>
+            <TColorCell></TColorCell>
+            <Tcell>{colorStatus.meaning}</Tcell>
+            <Tcell>
+              <ButtonTable>Usuń</ButtonTable>
+            </Tcell>
+          </Trow>
+        ))}
+        <Trow>
+          <TColorCell></TColorCell>
+          <Tcell>
+            <Input />
+          </Tcell>
+          <Tcell>
+            <ButtonTable>Dodaj nowy</ButtonTable>
+          </Tcell>
+        </Trow>
       </Table>
       <ButtonContainer>
-        <Button>Dodaj kolor</Button>
-        <Button>Wybierz</Button>
         <Button>Anuluj</Button>
+        <Button>Wybierz</Button>
       </ButtonContainer>
     </Container>
   );
