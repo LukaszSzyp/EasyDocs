@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { RgbColorPicker } from "react-colorful";
 import styled from "styled-components";
 
 const Container = styled.div`
@@ -28,6 +29,7 @@ const TNullColorCell = styled.td`
   border: 1px solid grey;
   border-radius: 3px;
   cursor: pointer;
+  position: relative;
 `;
 
 const Tcell = styled.td`
@@ -56,6 +58,16 @@ const Input = styled.input`
   height: 25px;
 `;
 
+const RgbColorPickerContainer = styled.div`
+  position: absolute;
+  top: 0;
+  left: 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  display: ${(props) => (props.isClosed ? "none" : "")};
+`;
+
 export const PopUpColorStatus = () => {
   const [colorStatusData, setColorStatusData] = useState([
     {
@@ -64,22 +76,29 @@ export const PopUpColorStatus = () => {
     },
     {
       color: "255,0,0",
-      description: "Niezapłacone",
+      description: "Niezapłacona",
     },
     {
       color: "0,255,0",
-      description: "Opłacone",
+      description: "Opłacona",
     },
   ]);
 
   const [description, setDescription] = useState("");
-  const [newColor, setNewColor] = useState("");
+  const [color, setColor] = useState({ r: 200, g: 150, b: 35 });
+  const [isColorPickerClosed, setIsColorPickerClosed] = useState(true);
 
-  const DeleteColorStatusRowHandler = (id) => {
+  const deleteColorStatusRowHandler = (id) => {
     const data = [...colorStatusData];
     data.splice(id, 1);
     console.log(data);
     setColorStatusData(data);
+  };
+
+  const openColorPickerPopupHandler = () => {
+    isColorPickerClosed
+      ? setIsColorPickerClosed(false)
+      : setIsColorPickerClosed(true);
   };
 
   return (
@@ -98,7 +117,7 @@ export const PopUpColorStatus = () => {
               <ButtonTable
                 rowId={colorStatus.id}
                 onClick={() => {
-                  DeleteColorStatusRowHandler(index);
+                  deleteColorStatusRowHandler(index);
                 }}
               >
                 Usuń
@@ -107,7 +126,11 @@ export const PopUpColorStatus = () => {
           </Trow>
         ))}
         <Trow>
-          <TNullColorCell></TNullColorCell>
+          <TNullColorCell onClick={openColorPickerPopupHandler}>
+            <RgbColorPickerContainer isClosed={isColorPickerClosed}>
+              <RgbColorPicker color={color} onChange={setColor} />
+            </RgbColorPickerContainer>
+          </TNullColorCell>
           <Tcell>
             <Input onChange={(e) => setDescription(e.target.value)} />
           </Tcell>
