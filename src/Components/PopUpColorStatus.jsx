@@ -72,10 +72,14 @@ const RgbColorPickerContainer = styled.div`
   display: ${(props) => (props.isClosed ? "none" : "")};
 `;
 
-export const PopUpColorStatus = () => {
+export const PopUpColorStatus = ({
+  setBoxColor,
+  setBoxDescription,
+  PopUpColorStatusClosedHandler,
+}) => {
   const [colorStatusData, setColorStatusData] = useState([
     {
-      color: "255,255,255",
+      color: "192,192,192",
       description: "Nieprzypisany",
     },
     {
@@ -120,6 +124,16 @@ export const PopUpColorStatus = () => {
 
   const selectedColorHandler = (index) => {
     setSelectedCellIndex(index);
+  };
+
+  const selectColorStatusHandler = () => {
+    setBoxColor(colorStatusData[selectedCellIndex].color);
+    setBoxDescription(colorStatusData[selectedCellIndex].description);
+    PopUpColorStatusClosedHandler();
+  };
+
+  const cancelColorStatusHandler = () => {
+    PopUpColorStatusClosedHandler();
   };
 
   return (
@@ -169,8 +183,8 @@ export const PopUpColorStatus = () => {
         </Trow>
       </Table>
       <ButtonContainer>
-        <Button>Anuluj</Button>
-        <Button>Wybierz</Button>
+        <Button onClick={cancelColorStatusHandler}>Anuluj</Button>
+        <Button onClick={selectColorStatusHandler}>Wybierz</Button>
       </ButtonContainer>
     </Container>
   );

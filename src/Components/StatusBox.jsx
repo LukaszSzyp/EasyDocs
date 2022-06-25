@@ -5,7 +5,7 @@ import { PopUpColorStatus } from "./PopUpColorStatus";
 const Box = styled.div`
   width: 20px;
   height: 10px;
-  background-color: red;
+  background-color: rgb(${(props) => props.color});
   border-radius: 2px;
 `;
 
@@ -14,15 +14,26 @@ const PopUpColorStatusContainer = styled.div`
 `;
 
 export const StatusBox = () => {
-  const [boxColor, setBoxColor] = useState("0,0,0");
+  const [boxColor, setBoxColor] = useState("192,192,192");
   const [boxDescription, setBoxDescription] = useState("");
   const [isPopUpColorStatusClosed, setIsPopUpColorStatusClosed] =
     useState(true);
+  const PopUpColorStatusClosedHandler = () => {
+    isPopUpColorStatusClosed
+      ? setIsPopUpColorStatusClosed(false)
+      : setIsPopUpColorStatusClosed(true);
+  };
   return (
-    <Box onClick={() => console.log("click")}>
+    <>
+      <Box onClick={PopUpColorStatusClosedHandler} color={boxColor}></Box>
       <PopUpColorStatusContainer isClosed={isPopUpColorStatusClosed}>
-        <PopUpColorStatus />
+        <PopUpColorStatus
+          isClosed={isPopUpColorStatusClosed}
+          setBoxColor={setBoxColor}
+          setBoxDescription={setBoxDescription}
+          PopUpColorStatusClosedHandler={PopUpColorStatusClosedHandler}
+        />
       </PopUpColorStatusContainer>
-    </Box>
+    </>
   );
 };
