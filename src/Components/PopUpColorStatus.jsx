@@ -111,7 +111,11 @@ export const PopUpColorStatus = () => {
       description: description,
     };
     const data = [...colorStatusData, newRow];
-    setColorStatusData(data);
+    if (description !== "") {
+      setColorStatusData(data);
+    } else {
+      alert("brak znaczenia koloru");
+    }
   };
 
   const selectedColorHandler = (index) => {
