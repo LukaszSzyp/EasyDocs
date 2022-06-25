@@ -20,8 +20,14 @@ const Thead = styled.tr`
 const Trow = styled.tr``;
 
 const TColorCell = styled.td`
-  background-color: #fff;
   border-radius: 3px;
+  background-color: rgb(${(props) => props.color});
+`;
+
+const TNullColorCell = styled.td`
+  border: 1px solid grey;
+  border-radius: 3px;
+  cursor: pointer;
 `;
 
 const Tcell = styled.td`
@@ -54,17 +60,26 @@ export const PopUpColorStatus = () => {
   const [colorStatusData, setColorStatusData] = useState([
     {
       color: "255,255,255",
-      meaning: "Nieprzypisany",
+      description: "Nieprzypisany",
     },
     {
       color: "255,0,0",
-      meaning: "Niezapłacone",
+      description: "Niezapłacone",
     },
     {
       color: "0,255,0",
-      meaning: "Opłacone",
+      description: "Opłacone",
     },
   ]);
+
+  const [description, setDescription] = useState("");
+
+  const DeleteColorStatusRowHandler = (id) => {
+    const data = [...colorStatusData];
+    data.splice(id, 1);
+    console.log(data);
+    setColorStatusData(data);
+  };
 
   return (
     <Container>
@@ -74,17 +89,24 @@ export const PopUpColorStatus = () => {
           <Tcell>Znaczenie</Tcell>
           <Tcell></Tcell>
         </Thead>
-        {colorStatusData.map((colorStatus) => (
-          <Trow>
-            <TColorCell></TColorCell>
-            <Tcell>{colorStatus.meaning}</Tcell>
+        {colorStatusData.map((colorStatus, index) => (
+          <Trow key={index}>
+            <TColorCell color={colorStatus.color}></TColorCell>
+            <Tcell>{colorStatus.description}</Tcell>
             <Tcell>
-              <ButtonTable>Usuń</ButtonTable>
+              <ButtonTable
+                rowId={colorStatus.id}
+                onClick={() => {
+                  DeleteColorStatusRowHandler(index);
+                }}
+              >
+                Usuń
+              </ButtonTable>
             </Tcell>
           </Trow>
         ))}
         <Trow>
-          <TColorCell></TColorCell>
+          <TNullColorCell></TNullColorCell>
           <Tcell>
             <Input />
           </Tcell>
