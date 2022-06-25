@@ -101,6 +101,15 @@ export const PopUpColorStatus = () => {
       : setIsColorPickerClosed(true);
   };
 
+  const addNewColorStatus = () => {
+    const newRow = {
+      color: `${color.r},${color.g},${color.b}`,
+      description: description,
+    };
+    const data = [...colorStatusData, newRow];
+    setColorStatusData(data);
+  };
+
   return (
     <Container>
       <Table>
@@ -135,7 +144,7 @@ export const PopUpColorStatus = () => {
             <Input onChange={(e) => setDescription(e.target.value)} />
           </Tcell>
           <Tcell>
-            <ButtonTable>Dodaj nowy</ButtonTable>
+            <ButtonTable onClick={addNewColorStatus}>Dodaj nowy</ButtonTable>
           </Tcell>
         </Trow>
       </Table>
