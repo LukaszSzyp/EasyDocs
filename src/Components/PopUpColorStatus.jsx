@@ -23,6 +23,9 @@ const Trow = styled.tr``;
 const TColorCell = styled.td`
   border-radius: 3px;
   background-color: rgb(${(props) => props.color});
+  cursor: pointer;
+  border: ${(props) =>
+    props.index === props.selectedIndex ? "2px solid black" : ""};
 `;
 
 const TNullColorCell = styled.td`
@@ -88,11 +91,11 @@ export const PopUpColorStatus = () => {
   const [description, setDescription] = useState("");
   const [color, setColor] = useState({ r: 200, g: 150, b: 35 });
   const [isColorPickerClosed, setIsColorPickerClosed] = useState(true);
+  const [selectedCellIndex, setSelectedCellIndex] = useState(0);
 
   const deleteColorStatusRowHandler = (id) => {
     const data = [...colorStatusData];
     data.splice(id, 1);
-    console.log(data);
     setColorStatusData(data);
   };
 
@@ -111,6 +114,10 @@ export const PopUpColorStatus = () => {
     setColorStatusData(data);
   };
 
+  const selectedColorHandler = (index) => {
+    setSelectedCellIndex(index);
+  };
+
   return (
     <Container>
       <Table>
@@ -121,7 +128,12 @@ export const PopUpColorStatus = () => {
         </Thead>
         {colorStatusData.map((colorStatus, index) => (
           <Trow key={index}>
-            <TColorCell color={colorStatus.color}></TColorCell>
+            <TColorCell
+              color={colorStatus.color}
+              index={index}
+              selectedIndex={selectedCellIndex}
+              onClick={(e) => selectedColorHandler(index)}
+            ></TColorCell>
             <Tcell>{colorStatus.description}</Tcell>
             <Tcell>
               <ButtonTable
