@@ -1,3 +1,10 @@
+import { PopUpColorStatus } from "../../Components/PopUpColorStatus";
+import { StatusBox } from "../../Components/StatusBox";
+
 export const Main = () => {
-  return <h1>hello from main page</h1>;
+  return (
+    <>
+      <StatusBox />
+    </>
+  );
 };
