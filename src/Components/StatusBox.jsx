@@ -1,6 +1,7 @@
 import { useState } from "react";
 import styled from "styled-components";
 import { PopUpColorStatus } from "./PopUpColorStatus";
+import { PopUpMessage } from "./PopUpMessage";
 
 const Box = styled.div`
   width: 20px;
@@ -18,6 +19,7 @@ export const StatusBox = () => {
   const [boxDescription, setBoxDescription] = useState("");
   const [isPopUpColorStatusClosed, setIsPopUpColorStatusClosed] =
     useState(true);
+  const [isOpenPopUpMessage, setIsOpenPopUpMessage] = useState(false);
   const PopUpColorStatusClosedHandler = () => {
     isPopUpColorStatusClosed
       ? setIsPopUpColorStatusClosed(false)
@@ -25,7 +27,17 @@ export const StatusBox = () => {
   };
   return (
     <>
-      <Box onClick={PopUpColorStatusClosedHandler} color={boxColor}></Box>
+      <Box
+        onClick={PopUpColorStatusClosedHandler}
+        color={boxColor}
+        onMouseOver={() => setIsOpenPopUpMessage(true)}
+        onMouseOut={() => setIsOpenPopUpMessage(false)}
+      ></Box>
+      <PopUpMessage
+        isOpen={isOpenPopUpMessage}
+        message={boxDescription}
+        onClose={setIsOpenPopUpMessage}
+      />
       <PopUpColorStatusContainer isClosed={isPopUpColorStatusClosed}>
         <PopUpColorStatus
           isClosed={isPopUpColorStatusClosed}
