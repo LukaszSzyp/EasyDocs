@@ -4,10 +4,11 @@ import { PopUpColorStatus } from "./PopUpColorStatus";
 import { PopUpMessage } from "./PopUpMessage";
 
 const Box = styled.div`
-  width: 20px;
-  height: 10px;
+  width: 30px;
+  height: 15px;
   background-color: rgb(${(props) => props.color});
   border-radius: 2px;
+  cursor: pointer;
 `;
 
 const PopUpColorStatusContainer = styled.div`
