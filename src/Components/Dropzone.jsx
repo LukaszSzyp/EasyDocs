@@ -25,9 +25,9 @@ function pageNumberValidator(file) {
 
   reader.onloadend = function () {
     const count = reader.result.match(/\/Type[\s]*\/Page[^s]/g).length;
+    console.log("liczba stron " + count);
   };
 
-  console.log(numberOfPages);
   if (numberOfPages > maxNumberOfPages) {
     return {
       code: "name-too-large",
