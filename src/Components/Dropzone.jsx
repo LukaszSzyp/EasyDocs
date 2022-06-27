@@ -19,16 +19,18 @@ const Container = styled.div`
 
 const maxNumberOfPages = 4;
 let numberOfPages;
-function pageNumberValidator(file) {
+async function pageNumberValidator(file) {
   const reader = new FileReader();
   reader.readAsBinaryString(file);
-
-  reader.onloadend = function () {
-    const count = reader.result.match(/\/Type[\s]*\/Page[^s]/g).length;
-    console.log("liczba stron " + count);
-  };
-
-  if (numberOfPages > maxNumberOfPages) {
+  const pageCountPromise = new Promise((resolve) => {
+    reader.onloadend = function () {
+      const count = reader.result.match(/\/Type[\s]*\/Page[^s]/g).length;
+      resolve(count);
+    };
+  });
+  const count = await pageCountPromise;
+  console.log("stron jest count" + count);
+  if (count > maxNumberOfPages) {
     return {
       code: "name-too-large",
       message: `Liczba stron w dokumencie równa się ${numberOfPages} i jest większa niż ${maxNumberOfPages}`,
