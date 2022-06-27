@@ -92,7 +92,7 @@ export const PopUpColorStatus = ({
     },
   ]);
 
-  const [description, setDescription] = useState("");
+  const [description, setDescription] = useState("Nieprzypisany");
   const [color, setColor] = useState({ r: 200, g: 150, b: 35 });
   const [isColorPickerClosed, setIsColorPickerClosed] = useState(true);
   const [selectedCellIndex, setSelectedCellIndex] = useState(0);

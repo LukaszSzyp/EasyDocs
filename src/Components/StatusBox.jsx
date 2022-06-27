@@ -17,7 +17,7 @@ const PopUpColorStatusContainer = styled.div`
 
 export const StatusBox = () => {
   const [boxColor, setBoxColor] = useState("192,192,192");
-  const [boxDescription, setBoxDescription] = useState("");
+  const [boxDescription, setBoxDescription] = useState("Nieprzypisany");
   const [isPopUpColorStatusClosed, setIsPopUpColorStatusClosed] =
     useState(true);
   const [isOpenPopUpMessage, setIsOpenPopUpMessage] = useState(false);
@@ -34,11 +34,7 @@ export const StatusBox = () => {
         onMouseOver={() => setIsOpenPopUpMessage(true)}
         onMouseOut={() => setIsOpenPopUpMessage(false)}
       ></Box>
-      <PopUpMessage
-        isOpen={isOpenPopUpMessage}
-        message={boxDescription}
-        onClose={setIsOpenPopUpMessage}
-      />
+      <PopUpMessage isOpen={isOpenPopUpMessage} message={boxDescription} />
       <PopUpColorStatusContainer isClosed={isPopUpColorStatusClosed}>
         <PopUpColorStatus
           isClosed={isPopUpColorStatusClosed}

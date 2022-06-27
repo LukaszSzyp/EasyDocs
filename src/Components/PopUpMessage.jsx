@@ -10,7 +10,7 @@ const MessageBox = styled.div`
   font-size: 1.2em;
 `;
 
-export const PopUpMessage = ({ isOpen, message, onClose }) => {
+export const PopUpMessage = ({ isOpen, message }) => {
   if (!isOpen) return null;
   return <MessageBox>{message}</MessageBox>;
 };
