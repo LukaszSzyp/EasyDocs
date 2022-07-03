@@ -41,7 +41,7 @@ export function Dropzone() {
 
   acceptedFiles.map((file) => {
     pagePDFCounter(file).then((count) => {
-      if (count < maxNumberOfPages)
+      if (count <= maxNumberOfPages)
         setAcceptedFiles(<li key={file.path}>{file.path}</li>);
     });
     return "";
