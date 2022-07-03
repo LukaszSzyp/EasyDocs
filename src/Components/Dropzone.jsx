@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useDropzone } from "react-dropzone";
 import styled from "styled-components";
 
@@ -17,9 +17,7 @@ const Container = styled.div`
   transition: border 0.24s ease-in-out;
 `;
 
-const maxNumberOfPages = 4;
-let numberOfPages;
-async function pageNumberValidator(file) {
+async function pagePDFCounter(file) {
   const reader = new FileReader();
   reader.readAsBinaryString(file);
   const pageCountPromise = new Promise((resolve) => {
@@ -29,40 +27,25 @@ async function pageNumberValidator(file) {
     };
   });
   const count = await pageCountPromise;
-  console.log("stron jest count" + count);
-  if (count > maxNumberOfPages) {
-    return {
-      code: "name-too-large",
-      message: `Liczba stron w dokumencie równa się ${numberOfPages} i jest większa niż ${maxNumberOfPages}`,
-    };
-  }
-
-  return null;
+  return count;
 }
 
-export function Dropzone(props) {
-  const { getRootProps, getInputProps, acceptedFiles, fileRejections } =
-    useDropzone({
-      accept: {
-        "pdf/pdf": [".pdf"],
-      },
-      validator: pageNumberValidator,
+export function Dropzone() {
+  const [AcceptedFiles, setAcceptedFiles] = useState();
+  const maxNumberOfPages = 4;
+  const { getRootProps, getInputProps, acceptedFiles } = useDropzone({
+    accept: {
+      "pdf/pdf": [".pdf"],
+    },
+  });
+
+  acceptedFiles.map((file) => {
+    pagePDFCounter(file).then((count) => {
+      if (count < maxNumberOfPages)
+        setAcceptedFiles(<li key={file.path}>{file.path}</li>);
     });
-
-  const acceptedFileItems = acceptedFiles.map((file) => (
-    <li key={file.path}>{file.path}</li>
-  ));
-
-  const fileRejectionItems = fileRejections.map(({ file, errors }) => (
-    <li key={file.path}>
-      {file.path}
-      <ul>
-        {errors.map((e) => (
-          <li key={e.code}>{e.message}</li>
-        ))}
-      </ul>
-    </li>
-  ));
+    return "";
+  });
 
   return (
     <div className="container">
@@ -72,9 +55,7 @@ export function Dropzone(props) {
       </Container>
       <aside>
         <h4>Accepted files</h4>
-        <ul>{acceptedFileItems}</ul>
-        <h4>Rejected files</h4>
-        <ul>{fileRejectionItems}</ul>
+        <ul>{AcceptedFiles}</ul>
       </aside>
     </div>
   );
